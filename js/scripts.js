@@ -20,9 +20,18 @@ $(document).ready(function() {
 
   $(".p1-roll").click(function() {
     var rollResult = diceRoll();
-    player1.currentScore = player1.currentScore + rollResult;
-    $("#p1-current-score").text(player1.currentScore);
-    $("#p1-die").text(rollResult);
+    if (rollResult === 1) {
+      player1.currentScore = 0;
+      $("#p1-current-score").text(player1.currentScore);
+      $("#p1-die").text(rollResult);
+      setTimeout(function() {
+        alert("Turn over, no change to score");
+      }, 100);
+    } else {
+      player1.currentScore = player1.currentScore + rollResult;
+      $("#p1-current-score").text(player1.currentScore);
+      $("#p1-die").text(rollResult);
+    }
   });
 
 });
