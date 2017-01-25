@@ -28,10 +28,18 @@ $(document).ready(function() {
         alert("Turn over, no change to score");
       }, 100);
     } else {
-      player1.currentScore = player1.currentScore + rollResult;
+      player1.currentScore += rollResult;
       $("#p1-current-score").text(player1.currentScore);
       $("#p1-die").text(rollResult);
     }
   });
-
+  $(".p1-hold").click(function() {
+    player1.totalScore += player1.currentScore;
+    $("#p1-total-score").text(player1.totalScore);
+    player1.currentScore = 0;
+    $("#p1-current-score").text(player1.currentScore);
+    setTimeout(function() {
+      alert("End of turn. Total Score:" + player1.totalScore);
+    }, 100);
+  });
 });
