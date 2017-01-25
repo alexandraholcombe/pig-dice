@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <script src="js/jquery-3.1.1.js" charset="utf-8"></script>
+  <script src="js/scripts.js" charset="utf-8"></script>
+  <meta charset="utf-8">
+  <title>Pig Dice</title>
+</head>
+<body>
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Pig Dice</h1>
+      <h2>Oink Oink</h2>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 player-boxes" id="player-1-container">
+        <h2>Player 1</h2>
+        <h1 class="dice">1</h1>
+        <div class="this-turn-container">
+          <h3>This Turn:</h3>
+          <span class="score" id="p1-current-score"></span>
+        </div>
+        <div class="total-score-container">
+          <h3>Total Score:</h3>
+          <span class="score" id="p1-total-score"></span>
+        </div>
+        <div class="button-container">
+          <button type="button" class="btn btn-info btn-lg" name="button">Roll</button>
+          <button type="button" class="btn btn-info btn-lg" name="button">Hold</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

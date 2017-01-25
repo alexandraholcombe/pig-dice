@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'dPoly Block Dice';
+  src: url('../resources/dPoly-Block-Dice.ttf.eot'); /* IE9 Compat Modes */
+  src: url('../resources/dPoly-Block-Dice?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../resources/dPoly-Block-Dice.ttf.woff') format('woff'), /* Pretty Modern Browsers */
+  url('../resources/dPoly-Block-Dice.ttf')  format('truetype'), /* Safari, Android, iOS */
+  url('../resources/dPoly-Block-Dice.svg#dPoly-Block-Dice') format('svg'); /* Legacy iOS */
+}
+
+.dice {
+  font-family: 'dPoly Block Dice', fantasy;
+  font-size: 150px;
+}
+
+.player-boxes {
+  text-align: center;
+}
+
+.button-container button {
+  margin: 20px auto;
+  display: block;
+}
