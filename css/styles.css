@@ -20,3 +20,12 @@
   margin: 20px auto;
   display: block;
 }
+
+.overlay {
+  background-color: rgba(96, 93, 97, 0.6);
+  z-index: 1000;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: none;
+}

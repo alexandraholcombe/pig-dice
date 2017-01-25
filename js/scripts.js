@@ -19,6 +19,7 @@ $(document).ready(function() {
   $("#p1-total-score").text(player1.totalScore);
 
   $(".p1-roll").click(function() {
+    $("#player-2-container .overlay").show();
     var rollResult = diceRoll();
     if (rollResult === 1) {
       player1.currentScore = 0;
