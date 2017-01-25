@@ -33,7 +33,7 @@ var diceRoll = function() {
 $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
 
-//Pops confirmation, then covers previous player and uncovers new player
+  //Pops confirmation, then covers previous player and uncovers new player
   var togglePlayerDiv = function(string) {
     setTimeout (function() {
       if (confirm(string)) {
@@ -42,38 +42,40 @@ $(document).ready(function() {
     }, 100);
   }
 
-//When score reaches over 100, winner div and screen overlay show
+  //When score reaches over 100, winner div and screen overlay show
   var scoreChecker = function(current, total) {
     if ((current + total) >= 100) {
       $("#screen-overlay").show();
     };
   };
 
-//Initial display of scores
+  //Initial display of scores
   playersArray.forEach(function(playerVar){
     $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
     $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
-  })
 
-  $(".p1-roll").click(function() {
-    $("#p2-container .overlay").show();
-    var rollResult = diceRoll();
-    if (rollResult === 1) {
-      player1.currentScore = 0;
-      $("#p1-current-score").text(player1.currentScore);
-      $("#p1-die").text("J");
-      togglePlayerDiv ("Turn over, no change to total score");
-    } else {
-      player1.currentScore += rollResult;
-      $("#p1-current-score").text(player1.currentScore);
-      $("#p1-die").text(rollResult);
-    }
+    //Roll on button click
+    $(playerVar.playerHTML.rollButton).click(function() {
+      $("#p2-container .overlay").show();
+      var rollResult = diceRoll();
+      if (rollResult === 1) {
+        playerVar.currentScore = 0;
+        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+        $(playerVar.playerHTML.dieDiv).text("J");
+        togglePlayerDiv ("Turn over, no change to total score");
+      } else {
+        playerVar.currentScore += rollResult;
+        $(playerVar.playerHTML.currentScoreSpan).text(player1.currentScore);
+        $(playerVar.playerHTML.dieDiv).text(rollResult);
+      }
+    });
+
+    $(playerVar.playerHTML.holdButton).click(function() {
+      playerVar.totalScore += playerVar.currentScore;
+      $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+      playerVar.currentScore = 0;
+      $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+      togglePlayerDiv("End of turn. Total Score:" + playerVar.totalScore);
+    });
   });
-  $(".p1-hold").click(function() {
-    player1.totalScore += player1.currentScore;
-    $("#p1-total-score").text(player1.totalScore);
-    player1.currentScore = 0;
-    $("#p1-current-score").text(player1.currentScore);
-    togglePlayerDiv("End of turn. Total Score:" + player1.totalScore);
-  });
-});
+})
