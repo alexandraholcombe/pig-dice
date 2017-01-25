@@ -1,5 +1,4 @@
 //back-end (business logic)
-var players = [player1, player2];
 
 function Player (name, currentScore, totalScore, playerHTML) {
   this.playerName = name,
@@ -23,20 +22,18 @@ var player2HTML = new PlayerHTML("#p2-die", "#p2-container", "#p2-current-score"
 var player1 = new Player("Player 1", 0, 0, player1HTML);
 var player2 = new Player("Player 2", 0, 0, player2HTML);
 
+var playersArray = [player1, player2];
+
 var diceRoll = function() {
   return Math.floor(Math.random() * 6) + 1;
 };
 
-var scoreChecker = function(current, total) {
-  if ((current + total) >= 100) {
-    $("#screen-overlay").show();
-  };
-};
 //front-end (UI)
 
 $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
 
+//Pops confirmation, then covers previous player and uncovers new player
   var togglePlayerDiv = function(string) {
     setTimeout (function() {
       if (confirm(string)) {
@@ -45,10 +42,18 @@ $(document).ready(function() {
     }, 100);
   }
 
-  $("#p1-current-score").text(player1.currentScore);
-  $("#p1-total-score").text(player1.totalScore);
-  $("#p2-current-score").text(player2.currentScore);
-  $("#p2-total-score").text(player2.currentScore);
+//When score reaches over 100, winner div and screen overlay show
+  var scoreChecker = function(current, total) {
+    if ((current + total) >= 100) {
+      $("#screen-overlay").show();
+    };
+  };
+
+//Initial display of scores
+  playersArray.forEach(function(playerVar){
+    $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+    $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+  })
 
   $(".p1-roll").click(function() {
     $("#p2-container .overlay").show();
