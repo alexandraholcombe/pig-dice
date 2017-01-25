@@ -1,23 +1,37 @@
 //back-end (business logic)
+var players = [player1, player2];
 
-function Player (name, currentScore, totalScore) {
+function Player (name, currentScore, totalScore, playerHTML) {
   this.playerName = name,
   this.currentScore = currentScore,
-  this.totalScore = totalScore
+  this.totalScore = totalScore,
+  this.playerHTML = playerHTML
 }
 
-var player1 = new Player("Player 1", 0, 0);
-var player2 = new Player("Player 2", 0, 0);
+function PlayerHTML (dieDiv, containerDiv, currentScoreSpan, totalScoreSpan, rollButton, holdButton) {
+  this.dieDiv = dieDiv,
+  this.containerDiv = containerDiv,
+  this.currentScoreSpan = currentScoreSpan,
+  this.totalScoreSpan = totalScoreSpan,
+  this.rollButton = rollButton,
+  this.holdButton = holdButton
+}
+
+var player1HTML = new PlayerHTML("#p1-die", "#p1-container", "#p1-current-score", "#p1-total-score", ".p1-roll", ".p1-hold");
+var player2HTML = new PlayerHTML("#p2-die", "#p2-container", "#p2-current-score", "#p2-total-score", ".p2-roll", ".p2-hold");
+
+var player1 = new Player("Player 1", 0, 0, player1HTML);
+var player2 = new Player("Player 2", 0, 0, player2HTML);
 
 var diceRoll = function() {
   return Math.floor(Math.random() * 6) + 1;
-}
+};
 
 var scoreChecker = function(current, total) {
   if ((current + total) >= 100) {
-    //pop the winner div
-  }
-}
+    $("#screen-overlay").show();
+  };
+};
 //front-end (UI)
 
 $(document).ready(function() {
@@ -26,7 +40,7 @@ $(document).ready(function() {
   var togglePlayerDiv = function(string) {
     setTimeout (function() {
       if (confirm(string)) {
-        $("#player-2-container .overlay, #player-1-container .overlay").toggle();
+        $("#p2-container .overlay, #p1-container .overlay").toggle();
       };
     }, 100);
   }
@@ -35,8 +49,9 @@ $(document).ready(function() {
   $("#p1-total-score").text(player1.totalScore);
   $("#p2-current-score").text(player2.currentScore);
   $("#p2-total-score").text(player2.currentScore);
+
   $(".p1-roll").click(function() {
-    $("#player-2-container .overlay").show();
+    $("#p2-container .overlay").show();
     var rollResult = diceRoll();
     if (rollResult === 1) {
       player1.currentScore = 0;
