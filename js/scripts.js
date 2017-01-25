@@ -56,7 +56,14 @@ $(document).ready(function() {
 
     //Roll on button click
     $(playerVar.playerHTML.rollButton).click(function() {
-      $("#p2-container .overlay").show();
+      // debugger;
+      var indexPlayerVar = playersArray.indexOf(playerVar);
+      playersArray.splice(indexPlayerVar, 1);
+      $(playersArray[0].playerHTML.containerDiv + " .overlay").show();
+      // $("#p2-container .overlay").show();
+      //reset playerArray, since we destroyed it
+
+      playersArray.push(playerVar);
       var rollResult = diceRoll();
       if (rollResult === 1) {
         playerVar.currentScore = 0;
@@ -65,7 +72,7 @@ $(document).ready(function() {
         togglePlayerDiv ("Turn over, no change to total score");
       } else {
         playerVar.currentScore += rollResult;
-        $(playerVar.playerHTML.currentScoreSpan).text(player1.currentScore);
+        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
         $(playerVar.playerHTML.dieDiv).text(rollResult);
       }
     });
