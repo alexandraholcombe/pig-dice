@@ -6,6 +6,7 @@ function Player (currentScore, totalScore) {
 }
 
 var player1 = new Player(0, 0);
+var player2 = new Player(0, 0);
 
 var diceRoll = function() {
   return Math.floor(Math.random() * 6) + 1;
@@ -20,6 +21,7 @@ var scoreChecker = function(current, total) {
 
 $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
+
   var togglePlayerDiv = function(string) {
     setTimeout (function() {
       if (confirm(string)) {
@@ -30,6 +32,8 @@ $(document).ready(function() {
 
   $("#p1-current-score").text(player1.currentScore);
   $("#p1-total-score").text(player1.totalScore);
+  $("#p2-current-score").text(player2.currentScore);
+  $("#p2-total-score").text(player2.currentScore);
   $(".p1-roll").click(function() {
     $("#player-2-container .overlay").show();
     var rollResult = diceRoll();
