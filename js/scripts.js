@@ -35,16 +35,14 @@ $(document).ready(function() {
 
   //Pops confirmation, then covers previous player and uncovers new player
   var togglePlayerDiv = function(string) {
-    setTimeout (function() {
-      if (confirm(string)) {
-        $("#p2-container .overlay, #p1-container .overlay").toggle();
-      };
-    }, 100);
-  }
+    $("#p2-container .overlay, #p1-container .overlay").toggle();
+  };
 
   //When score reaches over 100, winner div and screen overlay show
-  var scoreChecker = function(current, total) {
+  var scoreChecker = function(current, total, player) {
     if ((current + total) >= 100) {
+      $("#winner-name").text(player);
+      $("#p2-container .overlay, #p1-container .overlay").hide();
       $("#screen-overlay").show();
     };
   };
@@ -69,11 +67,12 @@ $(document).ready(function() {
         playerVar.currentScore = 0;
         $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
         $(playerVar.playerHTML.dieDiv).text("J");
-        togglePlayerDiv ("Turn over, no change to total score");
+        togglePlayerDiv();
       } else {
         playerVar.currentScore += rollResult;
         $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
         $(playerVar.playerHTML.dieDiv).text(rollResult);
+        scoreChecker(playerVar.currentScore, playerVar.totalScore, playerVar.playerName);
       }
     });
 
@@ -82,7 +81,7 @@ $(document).ready(function() {
       $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
       playerVar.currentScore = 0;
       $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-      togglePlayerDiv("End of turn. Total Score:" + playerVar.totalScore);
+      togglePlayerDiv();
     });
   });
 })
