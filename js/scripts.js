@@ -1,12 +1,13 @@
 //back-end (business logic)
 
-function Player (currentScore, totalScore) {
+function Player (name, currentScore, totalScore) {
+  this.playerName = name,
   this.currentScore = currentScore,
   this.totalScore = totalScore
 }
 
-var player1 = new Player(0, 0);
-var player2 = new Player(0, 0);
+var player1 = new Player("Player 1", 0, 0);
+var player2 = new Player("Player 2", 0, 0);
 
 var diceRoll = function() {
   return Math.floor(Math.random() * 6) + 1;
