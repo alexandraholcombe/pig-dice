@@ -33,13 +33,8 @@ var diceRoll = function() {
 $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
   $("#screen-overlay, #player-mode").show();
-  $("#one-player").click(function() {
-    player2.playerName = "Computer";
-    $("#screen-overlay, #player-mode").hide();
-  });
-  $("#two-player").click(function() {
-    $("#screen-overlay, #player-mode").hide();
-  });
+
+
 
 
   //Pops confirmation, then covers previous player and uncovers new player
@@ -87,25 +82,39 @@ $(document).ready(function() {
       $(playerVar.playerHTML.dieDiv).text(rollResult);
       scoreChecker(playerVar.currentScore, playerVar.totalScore, playerVar.playerName);
     }
-
   }
 
   //Initial display of scores
-  playersArray.forEach(function(playerVar){
-    $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-    $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
-
-    //Roll on button click
-    $(playerVar.playerHTML.rollButton).click(function() {
-      chooseToRoll(playerVar);
-    });
-
-    $(playerVar.playerHTML.holdButton).click(function() {
-      playerVar.totalScore += playerVar.currentScore;
-      $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
-      playerVar.currentScore = 0;
+  var playerLoop = function() {
+    playersArray.forEach(function(playerVar){
       $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-      togglePlayerDiv();
+      $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+
+      //Roll on button click
+      $(playerVar.playerHTML.rollButton).click(function() {
+        chooseToRoll(playerVar);
+      });
+
+      $(playerVar.playerHTML.holdButton).click(function() {
+        playerVar.totalScore += playerVar.currentScore;
+        $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+        playerVar.currentScore = 0;
+        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+        togglePlayerDiv();
+      });
     });
+  };
+
+  //One-player selection
+  $("#one-player").click(function() {
+    player2.playerName = "Computer";
+    $("#screen-overlay, #player-mode").hide();
   });
+  //Two-player selection
+  $("#two-player").click(function() {
+    $("#screen-overlay, #player-mode").hide();
+    playerLoop();
+  });
+
+
 })
