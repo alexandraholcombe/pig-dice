@@ -32,13 +32,13 @@ var diceRoll = function() {
 
 $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
-  $("#screen-overlay, #number-of-players").show();
+  $("#screen-overlay, #player-mode").show();
   $("#one-player").click(function() {
     player2.playerName = "Computer";
-    $("#screen-overlay, #number-of-players").hide();
+    $("#screen-overlay, #player-mode").hide();
   });
   $("#two-player").click(function() {
-    $("#screen-overlay, #number-of-players").hide();
+    $("#screen-overlay, #player-mode").hide();
   });
 
 
@@ -68,6 +68,28 @@ $(document).ready(function() {
       });
     });
 
+  //Roll function
+  var chooseToRoll = function(playerVar) {
+    var indexPlayerVar = playersArray.indexOf(playerVar);
+    playersArray.splice(indexPlayerVar, 1);
+    $(playersArray[0].playerHTML.containerDiv + " .overlay").show();
+
+    playersArray.push(playerVar);
+    var rollResult = diceRoll();
+    if (rollResult === 1) {
+      playerVar.currentScore = 0;
+      $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+      $(playerVar.playerHTML.dieDiv).text("J");
+      togglePlayerDiv();
+    } else {
+      playerVar.currentScore += rollResult;
+      $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+      $(playerVar.playerHTML.dieDiv).text(rollResult);
+      scoreChecker(playerVar.currentScore, playerVar.totalScore, playerVar.playerName);
+    }
+
+  }
+
   //Initial display of scores
   playersArray.forEach(function(playerVar){
     $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
@@ -75,26 +97,7 @@ $(document).ready(function() {
 
     //Roll on button click
     $(playerVar.playerHTML.rollButton).click(function() {
-      // debugger;
-      var indexPlayerVar = playersArray.indexOf(playerVar);
-      playersArray.splice(indexPlayerVar, 1);
-      $(playersArray[0].playerHTML.containerDiv + " .overlay").show();
-      // $("#p2-container .overlay").show();
-      //reset playerArray, since we destroyed it
-
-      playersArray.push(playerVar);
-      var rollResult = diceRoll();
-      if (rollResult === 1) {
-        playerVar.currentScore = 0;
-        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-        $(playerVar.playerHTML.dieDiv).text("J");
-        togglePlayerDiv();
-      } else {
-        playerVar.currentScore += rollResult;
-        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-        $(playerVar.playerHTML.dieDiv).text(rollResult);
-        scoreChecker(playerVar.currentScore, playerVar.totalScore, playerVar.playerName);
-      }
+      chooseToRoll(playerVar);
     });
 
     $(playerVar.playerHTML.holdButton).click(function() {

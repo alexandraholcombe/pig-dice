@@ -39,7 +39,7 @@
   display: none;
 }
 
-#winner, #number-of-players {
+#winner, #player-mode {
   font-size: 30px;
   margin-left: 30%;
   margin-right: 30%;
@@ -50,7 +50,7 @@
   padding: 20px;
 }
 
-#number-of-players button {
+#player-mode button {
   margin: 1em 0 1em;
 }
 
