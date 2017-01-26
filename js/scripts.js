@@ -157,6 +157,7 @@ $(document).ready(function() {
     player2.playerName = "Computer";
     $(player2.playerHTML.containerDiv + " .overlay").show();
     $("#screen-overlay, #player-mode").hide();
+
     $(player1.playerHTML.rollButton).click(function() {
       //we decide what to do based on the results of the die
       decision(player1);
@@ -164,8 +165,12 @@ $(document).ready(function() {
         console.log("Computer turn!");
       };
     });
+
+    $(player1.playerHTML.holdButton).click(function() {
+      chooseToHold(player1);
+    });
   });
-  
+
   //Two-player selection
   $("#two-player").click(function() {
     $("#screen-overlay, #player-mode").hide();
