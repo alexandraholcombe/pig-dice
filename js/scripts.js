@@ -116,27 +116,30 @@ $(document).ready(function() {
   };
 
   var computerLoop = function() {
-    playersArray.forEach(function(playerVar){
-      $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-      $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+    if(player1.totalScore < 100 && player2.totalScore < 100 ) {
+      playersArray.forEach(function(playerVar){
+        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+        $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
 
-      if (playerVar.playerName === "Computer") {
-        chooseToRoll(playerVar);
-        console.log(playerVar.currentScore);
-        chooseToRoll(playerVar);
-        console.log(playerVar.currentScore);
-        chooseToHold(playerVar);
-      } else {
-        //Roll on button click
-        $(playerVar.playerHTML.rollButton).click(function() {
+        if (playerVar.playerName === "Computer") {
           chooseToRoll(playerVar);
-        });
-
-        $(playerVar.playerHTML.holdButton).click(function() {
+          console.log(playerVar.currentScore);
+          chooseToRoll(playerVar);
+          console.log(playerVar.currentScore);
           chooseToHold(playerVar);
-        });
-      };
-    });
+        } else {
+          //Roll on button click
+          $(playerVar.playerHTML.rollButton).click(function() {
+            chooseToRoll(playerVar);
+          });
+
+          $(playerVar.playerHTML.holdButton).click(function() {
+            chooseToHold(playerVar);
+            computerLoop();
+          });
+        };
+      });
+    }
   }
 
   //One-player selection
