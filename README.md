@@ -51,6 +51,18 @@ This web application will take a number from a user and return a range of number
 * Example Input: OK
 * Example Output: New game appears
 
+
+
+## Specifications for Playing against Computer
+
+**When you choose to play against the computer, the computer will be player 2.**
+* Example Input: *Play Against Computer clicky*
+* Example Output: "You are player 1, the computer is player 2".
+
+**The computer rolls twice for player 2, after player 1's turn is over**
+* Example Input: Player 1 holds/rolls a 1
+* Example Output: Computer rolls.
+
 ## Support and contact details
 
 Please contact Allie Holcombe at alexandra.holcombe@gmail.com or Elise St Hilaire at eliseylenore@gmail.com with any questions, concerns, or suggestions.

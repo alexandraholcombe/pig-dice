@@ -32,6 +32,15 @@ var diceRoll = function() {
 
 $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
+  $("#screen-overlay, #number-of-players").show();
+  $("#one-player").click(function() {
+    player2.playerName = "Computer";
+    $("#screen-overlay, #number-of-players").hide();
+  });
+  $("#two-player").click(function() {
+    $("#screen-overlay, #number-of-players").hide();
+  });
+
 
   //Pops confirmation, then covers previous player and uncovers new player
   var togglePlayerDiv = function(string) {
