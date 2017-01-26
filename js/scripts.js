@@ -34,6 +34,12 @@ $(document).ready(function() {
   $("#p1-die, #p2-die").text(0);
   $("#screen-overlay, #player-mode").show();
 
+  //initial scores
+  $(player1.playerHTML.currentScoreSpan).text(player1.currentScore);
+  $(player1.playerHTML.totalScoreSpan).text(player1.totalScore);
+  $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+  $(player2.playerHTML.totalScoreSpan).text(player2.totalScore);
+
 
 
 
@@ -63,20 +69,11 @@ $(document).ready(function() {
       });
     });
 
-  //Roll function
-  var chooseToRoll = function(playerVar) {
-    //block off player that's not playing
-    var indexPlayerVar = playersArray.indexOf(playerVar);
-    playersArray.splice(indexPlayerVar, 1);
-    $(playersArray[0].playerHTML.containerDiv + " .overlay").show();
-
-    //add player back into array
-    playersArray.push(playerVar);
-
+  //we roll the die AND decide what to do based on the results of the die
+  var decision = function(playerVar) {
     //where we actually roll the die
     var rollResult = diceRoll();
-
-    //we decide what to do based on the results of the die
+    //decide what to do based on the results of the die
     if (rollResult === 1) {
       playerVar.currentScore = 0;
       $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
@@ -88,6 +85,20 @@ $(document).ready(function() {
       $(playerVar.playerHTML.dieDiv).text(rollResult);
       scoreChecker(playerVar.currentScore, playerVar.totalScore, playerVar.playerName);
     }
+  }
+
+  //Roll function
+  var chooseToRoll = function(playerVar) {
+    //block off player that's not playing
+    var indexPlayerVar = playersArray.indexOf(playerVar);
+    playersArray.splice(indexPlayerVar, 1);
+    $(playersArray[0].playerHTML.containerDiv + " .overlay").show();
+
+    //add player back into array
+    playersArray.push(playerVar);
+
+    //we decide what to do based on the results of the die
+    decision(playerVar);
   }
 
   var chooseToHold = function(playerVar) {
@@ -148,7 +159,8 @@ $(document).ready(function() {
     $(player2.playerHTML.containerDiv + " .overlay").show();
     $("#screen-overlay, #player-mode").hide();
     $(player1.playerHTML.rollButton).click(function() {
-
+      //we decide what to do based on the results of the die
+      decision(player1)
     });
 
   });
