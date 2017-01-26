@@ -65,12 +65,18 @@ $(document).ready(function() {
 
   //Roll function
   var chooseToRoll = function(playerVar) {
+    //block off player that's not playing
     var indexPlayerVar = playersArray.indexOf(playerVar);
     playersArray.splice(indexPlayerVar, 1);
     $(playersArray[0].playerHTML.containerDiv + " .overlay").show();
 
+    //add player back into array
     playersArray.push(playerVar);
+
+    //where we actually roll the die
     var rollResult = diceRoll();
+
+    //we decide what to do based on the results of the die
     if (rollResult === 1) {
       playerVar.currentScore = 0;
       $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
@@ -82,6 +88,14 @@ $(document).ready(function() {
       $(playerVar.playerHTML.dieDiv).text(rollResult);
       scoreChecker(playerVar.currentScore, playerVar.totalScore, playerVar.playerName);
     }
+  }
+
+  var chooseToHold = function(playerVar) {
+    playerVar.totalScore += playerVar.currentScore;
+    $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+    playerVar.currentScore = 0;
+    $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+    togglePlayerDiv();
   }
 
   //Initial display of scores
@@ -96,19 +110,40 @@ $(document).ready(function() {
       });
 
       $(playerVar.playerHTML.holdButton).click(function() {
-        playerVar.totalScore += playerVar.currentScore;
-        $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
-        playerVar.currentScore = 0;
-        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-        togglePlayerDiv();
+        chooseToHold(playerVar);
       });
     });
   };
+
+  var computerLoop = function() {
+    playersArray.forEach(function(playerVar){
+      $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+      $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+
+      if (playerVar.playerName === "Computer") {
+        chooseToRoll(playerVar);
+        console.log(playerVar.currentScore);
+        chooseToRoll(playerVar);
+        console.log(playerVar.currentScore);
+        chooseToHold(playerVar);
+      } else {
+        //Roll on button click
+        $(playerVar.playerHTML.rollButton).click(function() {
+          chooseToRoll(playerVar);
+        });
+
+        $(playerVar.playerHTML.holdButton).click(function() {
+          chooseToHold(playerVar);
+        });
+      };
+    });
+  }
 
   //One-player selection
   $("#one-player").click(function() {
     player2.playerName = "Computer";
     $("#screen-overlay, #player-mode").hide();
+    computerLoop();
   });
   //Two-player selection
   $("#two-player").click(function() {
