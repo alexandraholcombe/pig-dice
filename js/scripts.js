@@ -116,8 +116,9 @@ $(document).ready(function() {
   };
 
   var computerLoop = function() {
-    if(player1.totalScore < 100 && player2.totalScore < 100 ) {
+      // debugger;
       playersArray.forEach(function(playerVar){
+        // debugger;
         $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
         $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
 
@@ -135,18 +136,21 @@ $(document).ready(function() {
 
           $(playerVar.playerHTML.holdButton).click(function() {
             chooseToHold(playerVar);
-            computerLoop();
           });
         };
       });
     }
-  }
+
 
   //One-player selection
   $("#one-player").click(function() {
     player2.playerName = "Computer";
+    $(player2.playerHTML.containerDiv + " .overlay").show();
     $("#screen-overlay, #player-mode").hide();
-    computerLoop();
+    $(player1.playerHTML.rollButton).click(function() {
+
+    });
+
   });
   //Two-player selection
   $("#two-player").click(function() {
