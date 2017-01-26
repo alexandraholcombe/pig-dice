@@ -47,6 +47,18 @@ $(document).ready(function() {
     };
   };
 
+  //When click Play Again, game resets
+  $("#play-again").click(function() {
+      $("#screen-overlay").hide();
+      playersArray.forEach(function(playerVar){
+        playerVar.currentScore = 0;
+        playerVar.totalScore = 0;
+        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+        $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+        $("#p1-die, #p2-die").text(0);
+      });
+    });
+
   //Initial display of scores
   playersArray.forEach(function(playerVar){
     $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
