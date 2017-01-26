@@ -161,8 +161,33 @@ $(document).ready(function() {
     $(player1.playerHTML.rollButton).click(function() {
       //we decide what to do based on the results of the die
       decision(player1);
+      //computer takes turn
       if ($("#p1-container .overlay").is(":visible")) {
-        console.log("Computer turn!");
+        for (i=2; i > 0; i--) {
+          var rollResult = diceRoll();
+          console.log(rollResult);
+          if (rollResult === 1) {
+            player2.currentScore = 0;
+            $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+            $(player2.playerHTML.dieDiv).text("J");
+            i = 0;
+            togglePlayerDiv();
+          } else if (i == 1) {
+            player2.currentScore += rollResult;
+            $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+            $(player2.playerHTML.dieDiv).text(rollResult);
+            scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
+            player2.totalScore += player2.currentScore;
+            $(player2.playerHTML.currentScoreSpan).text(0);
+            $(player2.playerHTML.totalScoreSpan).text(player2.totalScore);
+            togglePlayerDiv();
+        } else {
+            player2.currentScore += rollResult;
+            $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+            $(player2.playerHTML.dieDiv).text(rollResult);
+            scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
+          };
+        };
       };
     });
 
