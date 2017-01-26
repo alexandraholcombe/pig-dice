@@ -152,7 +152,6 @@ $(document).ready(function() {
       });
     }
 
-
   //One-player selection
   $("#one-player").click(function() {
     player2.playerName = "Computer";
@@ -160,10 +159,13 @@ $(document).ready(function() {
     $("#screen-overlay, #player-mode").hide();
     $(player1.playerHTML.rollButton).click(function() {
       //we decide what to do based on the results of the die
-      decision(player1)
+      decision(player1);
+      if ($("#p1-container .overlay").is(":visible")) {
+        console.log("Computer turn!");
+      };
     });
-
   });
+  
   //Two-player selection
   $("#two-player").click(function() {
     $("#screen-overlay, #player-mode").hide();
