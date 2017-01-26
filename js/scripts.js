@@ -54,6 +54,7 @@ $(document).ready(function() {
       $("#winner-name").text(player);
       $("#p2-container .overlay, #p1-container .overlay").hide();
       $("#screen-overlay").show();
+      $("#winner").show();
     };
   };
 
@@ -168,7 +169,6 @@ $(document).ready(function() {
         computerLoop();
       };
     });
-
     $(player1.playerHTML.holdButton).click(function() {
       chooseToHold(player1);
       computerLoop();
