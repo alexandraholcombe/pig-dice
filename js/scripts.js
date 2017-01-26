@@ -127,30 +127,32 @@ $(document).ready(function() {
   };
 
   var computerLoop = function() {
-      // debugger;
-      playersArray.forEach(function(playerVar){
-        // debugger;
-        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-        $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
-
-        if (playerVar.playerName === "Computer") {
-          chooseToRoll(playerVar);
-          console.log(playerVar.currentScore);
-          chooseToRoll(playerVar);
-          console.log(playerVar.currentScore);
-          chooseToHold(playerVar);
-        } else {
-          //Roll on button click
-          $(playerVar.playerHTML.rollButton).click(function() {
-            chooseToRoll(playerVar);
-          });
-
-          $(playerVar.playerHTML.holdButton).click(function() {
-            chooseToHold(playerVar);
-          });
-        };
-      });
-    }
+    for (i=2; i > 0; i--) {
+      var rollResult = diceRoll();
+      console.log(rollResult);
+      if (rollResult === 1) {
+        player2.currentScore = 0;
+        $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+        $(player2.playerHTML.dieDiv).text("J");
+        i = 0;
+        togglePlayerDiv();
+      } else if (i == 1) {
+        player2.currentScore += rollResult;
+        $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+        $(player2.playerHTML.dieDiv).text(rollResult);
+        scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
+        player2.totalScore += player2.currentScore;
+        $(player2.playerHTML.currentScoreSpan).text(0);
+        $(player2.playerHTML.totalScoreSpan).text(player2.totalScore);
+        togglePlayerDiv();
+    } else {
+        player2.currentScore += rollResult;
+        $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
+        $(player2.playerHTML.dieDiv).text(rollResult);
+        scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
+      };
+    };
+  }
 
   //One-player selection
   $("#one-player").click(function() {
@@ -163,36 +165,13 @@ $(document).ready(function() {
       decision(player1);
       //computer takes turn
       if ($("#p1-container .overlay").is(":visible")) {
-        for (i=2; i > 0; i--) {
-          var rollResult = diceRoll();
-          console.log(rollResult);
-          if (rollResult === 1) {
-            player2.currentScore = 0;
-            $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
-            $(player2.playerHTML.dieDiv).text("J");
-            i = 0;
-            togglePlayerDiv();
-          } else if (i == 1) {
-            player2.currentScore += rollResult;
-            $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
-            $(player2.playerHTML.dieDiv).text(rollResult);
-            scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
-            player2.totalScore += player2.currentScore;
-            $(player2.playerHTML.currentScoreSpan).text(0);
-            $(player2.playerHTML.totalScoreSpan).text(player2.totalScore);
-            togglePlayerDiv();
-        } else {
-            player2.currentScore += rollResult;
-            $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
-            $(player2.playerHTML.dieDiv).text(rollResult);
-            scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
-          };
-        };
+        computerLoop();
       };
     });
 
     $(player1.playerHTML.holdButton).click(function() {
       chooseToHold(player1);
+      computerLoop();
     });
   });
 
