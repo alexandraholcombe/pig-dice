@@ -40,9 +40,6 @@ $(document).ready(function() {
   $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
   $(player2.playerHTML.totalScoreSpan).text(player2.totalScore);
 
-
-
-
   //Pops confirmation, then covers previous player and uncovers new player
   var togglePlayerDiv = function(string) {
     $("#p2-container .overlay, #p1-container .overlay").toggle();
@@ -60,15 +57,15 @@ $(document).ready(function() {
 
   //When click Play Again, game resets
   $("#play-again").click(function() {
-      $("#screen-overlay").hide();
-      playersArray.forEach(function(playerVar){
-        playerVar.currentScore = 0;
-        playerVar.totalScore = 0;
-        $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
-        $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
-        $("#p1-die, #p2-die").text(0);
-      });
+    $("#screen-overlay").hide();
+    playersArray.forEach(function(playerVar){
+      playerVar.currentScore = 0;
+      playerVar.totalScore = 0;
+      $(playerVar.playerHTML.currentScoreSpan).text(playerVar.currentScore);
+      $(playerVar.playerHTML.totalScoreSpan).text(playerVar.totalScore);
+      $("#p1-die, #p2-die").text(0);
     });
+  });
 
   //we roll the die AND decide what to do based on the results of the die
   var decision = function(playerVar) {
@@ -127,33 +124,40 @@ $(document).ready(function() {
     });
   };
 
+  function doSetTimeout(i) {
+
+  };
+
   var computerLoop = function() {
-    for (i=2; i > 0; i--) {
+    for (i=3; i > 0; i--)
+    setTimeout(function () {
       var rollResult = diceRoll();
       console.log(rollResult);
       if (rollResult === 1) {
         player2.currentScore = 0;
         $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
         $(player2.playerHTML.dieDiv).text("J");
-        i = 0;
+        // i = 0;
         togglePlayerDiv();
-      } else if (i == 1) {
+      } else if (i <= 1) {
+        debugger;
         player2.currentScore += rollResult;
         $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
         $(player2.playerHTML.dieDiv).text(rollResult);
         scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
         player2.totalScore += player2.currentScore;
-        $(player2.playerHTML.currentScoreSpan).text(0);
         $(player2.playerHTML.totalScoreSpan).text(player2.totalScore);
+        $(player2.playerHTML.currentScoreSpan).text(0);
         togglePlayerDiv();
-    } else {
+      } else {
         player2.currentScore += rollResult;
         $(player2.playerHTML.currentScoreSpan).text(player2.currentScore);
         $(player2.playerHTML.dieDiv).text(rollResult);
         scoreChecker(player2.currentScore, player2.totalScore, player2.playerName);
       };
-    };
-  }
+    }, 1000*i);
+
+  };
 
   //One-player selection
   $("#one-player").click(function() {
